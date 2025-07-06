@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-74^m#*ezd99z4w4es4_0%o4f5n=ul!f!-#7+4vi$lxd_=9gq=@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['back-ww44.onrender.com']
+ALLOWED_HOSTS = ['back-ww44.onrender.com', '127.0.0.1']
 
 
 # Application definition
@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'corsheaders',
-    'usuarios'
+    'usuarios',
+    'servicios',
+    'cotizaciones'
 ]
 
 MIDDLEWARE = [

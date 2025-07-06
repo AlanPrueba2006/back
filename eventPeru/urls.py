@@ -14,10 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.conf.urls.static import static
 
+from cotizaciones.views import CotizacionComprobanteView, CotizacionCreateView, CotizacionUpdateView, CotizacionesListView
+from servicios.views import ServicioCreateView, ServicioDetailView, ServicioListView
 from usuarios.views import DecryptUserView, LoginView, RegisterView, UsuarioChangeStateView, UsuarioDeleteView, UsuarioDetailView, UsuarioListView, UsuarioUpdateView
 
 urlpatterns = [
@@ -32,4 +36,18 @@ urlpatterns = [
     path('usuarios/<str:dni>/change-state/', UsuarioChangeStateView.as_view(), name='usuario-change-state'),
     path('usuarios/<str:dni>/delete/', UsuarioDeleteView.as_view(), name='usuario-delete'),
     path('decrypt-user/', DecryptUserView.as_view(), name='decrypt-user'),
+
+    # servicios
+    path('servicios/', ServicioListView.as_view(), name='listar-servicios'),
+    path('servicios/create/', ServicioCreateView.as_view(), name='crear-servicio'),
+    path('servicios/<int:pk>/', ServicioDetailView.as_view(), name='detalle-servicio'),
+
+    # cotizaciones
+    path('cotizacion/create/', CotizacionCreateView.as_view(), name='crear-cotizacion'),
+    path('cotizacion/', CotizacionesListView.as_view(), name='mis-cotizaciones'),
+    path('<int:pk>/precio/', CotizacionUpdateView.as_view(), name='editar-cotizacion'),
+    path('<int:pk>/pago/', CotizacionComprobanteView.as_view(), name='subir-comprobante'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

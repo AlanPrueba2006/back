@@ -45,8 +45,8 @@ urlpatterns = [
     # cotizaciones
     path('cotizacion/create/', CotizacionCreateView.as_view(), name='crear-cotizacion'),
     path('cotizacion/', CotizacionesListView.as_view(), name='mis-cotizaciones'),
-    path('<int:pk>/precio/', CotizacionUpdateView.as_view(), name='editar-cotizacion'),
-    path('<int:pk>/pago/', CotizacionComprobanteView.as_view(), name='subir-comprobante'),
+    path('cotizacion/<int:pk>/precio/', CotizacionUpdateView.as_view(), name='editar-cotizacion'),
+    path('cotizacion/<int:pk>/pago/', CotizacionComprobanteView.as_view(), name='subir-comprobante'),
 ]
 
 if settings.DEBUG:

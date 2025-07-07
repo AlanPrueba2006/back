@@ -38,12 +38,15 @@ class CotizacionUpdateView(generics.UpdateAPIView):
     queryset = Cotizacion.objects.all()
     serializer_class = CotizacionAdminUpdateSerializer
     permission_classes = [IsAuthenticated]
-
+    
 class CotizacionComprobanteView(generics.UpdateAPIView):
     queryset = Cotizacion.objects.all()
     serializer_class = ComprobantePagoSerializer
     parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):  # <-- ESTO ES CLAVE
+        return self.update(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         cotizacion = self.get_object()
@@ -59,10 +62,14 @@ class CotizacionComprobanteView(generics.UpdateAPIView):
         cotizacion.estado = 'pagada'
         cotizacion.save()
 
-        from reservas.models import Reserva
-        Reserva.objects.create(
-            cotizacion=cotizacion,
-            fecha_reservada=cotizacion.fecha_evento
-        )
+        try:
+            from reservas.models import Reserva
+            Reserva.objects.create(
+                cotizacion=cotizacion,
+                fecha_reservada=cotizacion.fecha_evento
+            )
+        except Exception as e:
+            return Response({"error": f"Error al crear la reserva: {str(e)}"}, status=500)
 
         return Response({"mensaje": "Pago subido y reserva creada."}, status=200)
+

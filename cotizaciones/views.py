@@ -20,6 +20,20 @@ class CotizacionesListView(generics.ListAPIView):
     def get_queryset(self):
         return Cotizacion.objects.filter(cliente=self.request.user)
 
+
+
+class CotizacionesAdminListView(generics.ListAPIView):
+    """ Devuelve todas las cotizaciones solo para usuarios con rol admin. """
+    serializer_class = CotizacionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.rol == 'admin':
+            return Cotizacion.objects.all().order_by('-fecha_creacion')
+        return Cotizacion.objects.none()
+
+
 class CotizacionUpdateView(generics.UpdateAPIView):
     queryset = Cotizacion.objects.all()
     serializer_class = CotizacionAdminUpdateSerializer

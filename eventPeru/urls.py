@@ -20,7 +20,7 @@ from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.conf.urls.static import static
 
-from cotizaciones.views import CotizacionComprobanteView, CotizacionCreateView, CotizacionUpdateView, CotizacionesListView
+from cotizaciones.views import CotizacionComprobanteView, CotizacionCreateView, CotizacionUpdateView, CotizacionesAdminListView, CotizacionesListView
 from servicios.views import ServicioCreateView, ServicioDetailView, ServicioListView
 from usuarios.views import DecryptUserView, LoginView, RegisterView, UsuarioChangeStateView, UsuarioDeleteView, UsuarioDetailView, UsuarioListView, UsuarioUpdateView
 
@@ -47,6 +47,7 @@ urlpatterns = [
     path('cotizacion/', CotizacionesListView.as_view(), name='mis-cotizaciones'),
     path('cotizacion/<int:pk>/precio/', CotizacionUpdateView.as_view(), name='editar-cotizacion'),
     path('cotizacion/<int:pk>/pago/', CotizacionComprobanteView.as_view(), name='subir-comprobante'),
+    path('cotizacion/admin/', CotizacionesAdminListView.as_view(), name='cotizaciones-admin'),
 ]
 
 if settings.DEBUG:

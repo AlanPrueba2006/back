@@ -35,8 +35,6 @@ class CancelacionCreateView(generics.CreateAPIView):
         return Response({"mensaje": "Solicitud enviada."}, status=201)
 
 
-
-
 class AceptarCancelarReservaView(generics.UpdateAPIView):
     queryset = CancelacionReserva.objects.all()
     serializer_class = CancelacionReservaSerializer

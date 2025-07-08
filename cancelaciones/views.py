@@ -5,7 +5,7 @@ from .models import CancelacionReserva
 from reservas.models import Reserva
 from django.utils.timezone import now
 
-class SolicitarCancelacionView(generics.CreateAPIView):
+class CancelacionCreateView(generics.CreateAPIView):
     serializer_class = CancelacionReservaSerializer
     permission_classes = [permissions.IsAuthenticated]
 

@@ -20,6 +20,7 @@ from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.conf.urls.static import static
 
+from cancelaciones.views import AceptarCancelarReservaView, CancelacionCreateView
 from cotizaciones.views import CotizacionComprobanteView, CotizacionCreateView, CotizacionUpdateView, CotizacionesAdminListView, CotizacionesListView
 from reservas.views import ReservasListView
 from servicios.views import ServicioCreateView, ServicioDetailView, ServicioListView
@@ -52,6 +53,10 @@ urlpatterns = [
 
     #reservas
     path('reservas/', ReservasListView.as_view(), name='mis-reservas'),
+
+    #cancelaciones
+    path('solicitar-cancelacion/', CancelacionCreateView.as_view(), name='solicitar-cancelacion'),
+    path('cancelacion/<int:pk>/aceptar/', AceptarCancelarReservaView.as_view(), name='aceptar-cancelacion'),
 ]
 
 if settings.DEBUG:

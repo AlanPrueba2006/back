@@ -53,11 +53,11 @@ urlpatterns = [
 
     #reservas
     path('reservas/', ReservasListView.as_view(), name='mis-reservas'),
-    path('admin/reservas/', ReservasAdminView.as_view()),
+    path('reservas/admin', ReservasAdminView.as_view()),
 
     #cancelaciones
     path('solicitar-cancelacion/', CancelacionCreateView.as_view(), name='solicitar-cancelacion'),
-    path('admin/cancelaciones/', CancelacionesPendientesAdminView.as_view()),
+    path('cancelaciones/admin', CancelacionesPendientesAdminView.as_view()),
     path('cancelacion/<int:pk>/aceptar/', AceptarCancelarReservaView.as_view(), name='aceptar-cancelacion'),
 ]
 

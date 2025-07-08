@@ -9,3 +9,11 @@ class ReservasListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Reserva.objects.filter(cotizacion__cliente=self.request.user)
+
+
+class ReservasAdminView(generics.ListAPIView):
+    serializer_class = ReservaSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+    def get_queryset(self):
+        return Reserva.objects.all()

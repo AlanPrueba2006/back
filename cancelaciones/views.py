@@ -35,6 +35,15 @@ class CancelacionCreateView(generics.CreateAPIView):
         return Response({"mensaje": "Solicitud enviada."}, status=201)
 
 
+
+class CancelacionesPendientesAdminView(generics.ListAPIView):
+    serializer_class = CancelacionReservaSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+    def get_queryset(self):
+        return CancelacionReserva.objects.filter(aceptada_por_admin=False)
+
+
 class AceptarCancelarReservaView(generics.UpdateAPIView):
     queryset = CancelacionReserva.objects.all()
     serializer_class = CancelacionReservaSerializer

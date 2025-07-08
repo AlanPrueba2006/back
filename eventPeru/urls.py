@@ -20,9 +20,9 @@ from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.conf.urls.static import static
 
-from cancelaciones.views import AceptarCancelarReservaView, CancelacionCreateView
+from cancelaciones.views import AceptarCancelarReservaView, CancelacionCreateView, CancelacionesPendientesAdminView
 from cotizaciones.views import CotizacionComprobanteView, CotizacionCreateView, CotizacionUpdateView, CotizacionesAdminListView, CotizacionesListView
-from reservas.views import ReservasListView
+from reservas.views import ReservasAdminView, ReservasListView
 from servicios.views import ServicioCreateView, ServicioDetailView, ServicioListView
 from usuarios.views import DecryptUserView, LoginView, RegisterView, UsuarioChangeStateView, UsuarioDeleteView, UsuarioDetailView, UsuarioListView, UsuarioUpdateView
 
@@ -53,9 +53,11 @@ urlpatterns = [
 
     #reservas
     path('reservas/', ReservasListView.as_view(), name='mis-reservas'),
+    path('admin/reservas/', ReservasAdminView.as_view()),
 
     #cancelaciones
     path('solicitar-cancelacion/', CancelacionCreateView.as_view(), name='solicitar-cancelacion'),
+    path('admin/cancelaciones/', CancelacionesPendientesAdminView.as_view()),
     path('cancelacion/<int:pk>/aceptar/', AceptarCancelarReservaView.as_view(), name='aceptar-cancelacion'),
 ]
 

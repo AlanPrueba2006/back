@@ -38,7 +38,7 @@ class CancelacionCreateView(generics.CreateAPIView):
 
 class CancelacionesPendientesAdminView(generics.ListAPIView):
     serializer_class = CancelacionReservaSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return CancelacionReserva.objects.filter(aceptada_por_admin=False)
@@ -47,7 +47,7 @@ class CancelacionesPendientesAdminView(generics.ListAPIView):
 class AceptarCancelarReservaView(generics.UpdateAPIView):
     queryset = CancelacionReserva.objects.all()
     serializer_class = CancelacionReservaSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         cancelacion = self.get_object()

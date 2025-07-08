@@ -13,7 +13,7 @@ class ReservasListView(generics.ListAPIView):
 
 class ReservasAdminView(generics.ListAPIView):
     serializer_class = ReservaSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Reserva.objects.all()

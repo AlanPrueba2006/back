@@ -45,7 +45,7 @@ class CotizacionComprobanteView(generics.UpdateAPIView):
     parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
 
-    def patch(self, request, *args, **kwargs):  # <-- ESTO ES CLAVE
+    def patch(self, request, *args, **kwargs):  
         return self.update(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):

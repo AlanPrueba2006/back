@@ -13,6 +13,9 @@ class CancelacionCreateView(generics.CreateAPIView):
         reserva_id = request.data.get("reserva_id")
         motivo = request.data.get("motivo_cliente", "")
 
+        if not reserva_id:
+            return Response({"error": "Falta el ID de la reserva"}, status=400)
+
         try:
             reserva = Reserva.objects.get(id=reserva_id, cotizacion__cliente=request.user)
         except Reserva.DoesNotExist:
@@ -21,15 +24,20 @@ class CancelacionCreateView(generics.CreateAPIView):
         if CancelacionReserva.objects.filter(reserva=reserva).exists():
             return Response({"error": "Ya solicitaste cancelación."}, status=400)
 
+        # Actualiza el estado antes de guardar
         reserva.estado = "cancelacion_solicitada"
         reserva.save()
 
-        cancel = CancelacionReserva.objects.create(
-            reserva=reserva,
-            motivo_cliente=motivo
-        )
+        # Usa el serializer correctamente
+        data = {
+            "reserva": reserva.id,
+            "motivo_cliente": motivo
+        }
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        return Response({"mensaje": "Solicitud enviada."})
+        return Response({"mensaje": "Solicitud enviada."}, status=201)
 
 class AceptarCancelarReservaView(generics.UpdateAPIView):
     queryset = CancelacionReserva.objects.all()
